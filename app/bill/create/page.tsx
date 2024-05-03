@@ -14,11 +14,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { getBaseUrl } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-type Participant = {
-  name: string;
-};
 
 const STEP = {
   INPUT_NEW_BILL: "INPUT_NEW_BILL",
@@ -27,15 +25,16 @@ const STEP = {
 
 export default function CreateBill() {
   const [step, setStep] = useState(STEP.INPUT_NEW_BILL);
-  const [participants, setParticipants] = useState<Participant[]>([]);
+  const [participants, setParticipants] = useState<string[]>([]);
   const [newParticipantName, setNewParticipantName] = useState("");
   const [billName, setBillName] = useState("");
+  const router = useRouter();
 
   function addParticipant(name: string) {
     if (name.length === 0) {
       return;
     }
-    setParticipants([...participants, { name }]);
+    setParticipants([...participants, name]);
     setNewParticipantName("");
   }
 
@@ -51,6 +50,24 @@ export default function CreateBill() {
       return;
     }
     setStep(STEP.COMFIRM_NEW_BILL);
+  }
+
+  async function sendCreateBillRequest() {
+    const data = { bill_name: billName, participants: participants };
+    const response = await fetch(`${getBaseUrl()}/api/bill`, {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    try {
+      const result = await response.json();
+      const billId = result.data?.bill_id;
+      if (billId) {
+        router.push(`/bill/${billId}`);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return (
@@ -98,17 +115,16 @@ export default function CreateBill() {
 
                   {participants.map((participant, index) => {
                     return (
-                      <div className="flex items-center gap-2">
+                      <div
+                        className="flex items-center gap-2"
+                        key={`participant_${index}`}
+                      >
                         <Avatar className="h-8 w-8 border">
-                          <AvatarImage
-                            alt="@username"
-                            src="/placeholder-user.jpg"
-                          />
                           <AvatarFallback>
-                            {participant.name.slice(0, 1)}
+                            {participant.slice(0, 1)}
                           </AvatarFallback>
                         </Avatar>
-                        <span className="font-medium">{participant.name}</span>
+                        <span className="font-medium">{participant}</span>
                         <Button
                           size="icon"
                           variant="outline"
@@ -140,26 +156,29 @@ export default function CreateBill() {
             </CardHeader>
             <CardContent>
               <div className="grid gap-4">
-                {participants.map((participant) => (
-                  <div className="flex items-center justify-between">
+                {participants.map((participant, index) => (
+                  <div
+                    className="flex items-center justify-between"
+                    key={`participant_list_${index}`}
+                  >
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8 border">
-                        <AvatarImage
-                          alt="@username"
-                          src="/placeholder-user.jpg"
-                        />
                         <AvatarFallback>
-                          {participant.name.slice(0, 1)}
+                          {participant.slice(0, 1)}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="font-medium">{participant.name}</span>
+                      <span className="font-medium">{participant}</span>
                     </div>
                   </div>
                 ))}
               </div>
             </CardContent>
             <CardFooter>
-              <Button className="w-full" variant="outline">
+              <Button
+                className="w-full"
+                variant="outline"
+                onClick={() => sendCreateBillRequest()}
+              >
                 Create Bill
               </Button>
             </CardFooter>
