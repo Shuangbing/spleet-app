@@ -2,7 +2,7 @@
 
 import { PlusIcon } from "@/components/icons/PlusIcon";
 import { XIcon } from "@/components/icons/XIcon";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getBaseUrl } from "@/lib/utils";
+import { getBaseUrl, getColorByIndex } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -119,10 +119,13 @@ export default function CreateBill() {
                         className="flex items-center gap-2"
                         key={`participant_${index}`}
                       >
-                        <Avatar className="h-8 w-8 border">
-                          <AvatarFallback>
-                            {participant.slice(0, 1)}
-                          </AvatarFallback>
+                        <Avatar
+                          className="h-8 w-8 text-white"
+                          style={{
+                            backgroundColor: `${getColorByIndex(index)}`,
+                          }}
+                        >
+                          {participant.slice(0, 1).toUpperCase()}
                         </Avatar>
                         <span className="font-medium">{participant}</span>
                         <Button
@@ -162,10 +165,13 @@ export default function CreateBill() {
                     key={`participant_list_${index}`}
                   >
                     <div className="flex items-center gap-2">
-                      <Avatar className="h-8 w-8 border">
-                        <AvatarFallback>
-                          {participant.slice(0, 1)}
-                        </AvatarFallback>
+                      <Avatar
+                        className="h-8 w-8 text-white"
+                        style={{
+                          backgroundColor: `${getColorByIndex(index)}`,
+                        }}
+                      >
+                        {participant.slice(0, 1).toUpperCase()}
                       </Avatar>
                       <span className="font-medium">{participant}</span>
                     </div>
@@ -176,10 +182,9 @@ export default function CreateBill() {
             <CardFooter>
               <Button
                 className="w-full"
-                variant="outline"
                 onClick={() => sendCreateBillRequest()}
               >
-                Create Bill
+                Create a new bill
               </Button>
             </CardFooter>
           </Card>

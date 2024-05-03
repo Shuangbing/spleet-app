@@ -14,6 +14,6 @@ export class RedisClient {
     if (!result || typeof result !== 'string') {
       return null;
     }
-    return JSON.parse(result)[0] as T;
+    return JSON.parse(result)?.[0] as T;
   }
 }

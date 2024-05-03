@@ -37,3 +37,19 @@ export function createFailedNextResponse({ message }: { message?: string; }) {
 export function getBaseUrl() {
   return process.env.BASE_URL || 'http://localhost:3000'
 }
+
+export function getColorByIndex(index: number) {
+  const colorMap = [
+    "#FFB398",
+    "#99FFAC",
+    "#99ACFF",
+    "#FFFFB5",
+    "#FF99FF",
+    "#99FFFF",
+    "#FFB58C",
+    "#99C6FF",
+    "#C699FF",
+    "#FF9999"
+  ];
+  return colorMap[index % Object.keys(colorMap).length]
+}
