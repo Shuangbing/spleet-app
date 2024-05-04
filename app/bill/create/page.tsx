@@ -75,7 +75,7 @@ export default function CreateBill() {
       <div className="mx-auto max-w-md">
         {step === STEP.INPUT_NEW_BILL ? (
           <Card className="mb-6">
-            <CardHeader>
+            <CardHeader className="pb-0">
               <CardTitle>New bill</CardTitle>
               <CardDescription>
                 Create a new bill and add participants to split the cost.
@@ -94,7 +94,7 @@ export default function CreateBill() {
               <div className="space-y-2">
                 <Label htmlFor="participants">Participants</Label>
                 <div className="grid gap-2">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 pb-2">
                     <Input
                       id="participants"
                       ref={participantInputRef}
@@ -150,7 +150,7 @@ export default function CreateBill() {
         ) : null}
         {step === STEP.COMFIRM_NEW_BILL ? (
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-0">
               <CardTitle>{billName}</CardTitle>
               <CardDescription>
                 {participants.length} participants split the bill.

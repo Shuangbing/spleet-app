@@ -26,12 +26,10 @@ import { cn, fetchData, postData, timestampToString } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+import { RightArrow } from "../../../components/icons/RightArrow";
+import { useSWRConfig } from "swr";
 
-export default function BillNewTransactionPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function BillPage({ params }: { params: { id: string } }) {
   const { data } = useSWR<Bill>(`/api/bill/${params.id}`, fetchData);
   const [selectedBeneficiaries, setSelectedBeneficiaries] = useState<string[]>(
     []
@@ -40,7 +38,7 @@ export default function BillNewTransactionPage({
   const [amount, setAmount] = useState(0);
   const [description, setDescription] = useState("");
   const [isOpenTransactionEditor, setOpenTransactionEditor] = useState(false);
-  const router = useRouter();
+  const { mutate } = useSWRConfig();
 
   function handleCheckboxChange(id: string) {
     setSelectedBeneficiaries((prevValues) => {
@@ -69,7 +67,12 @@ export default function BillNewTransactionPage({
     };
     try {
       await postData(`/api/bill/${params.id}`, data);
-      router.push(`/bill/${params.id}`);
+      setPayer("");
+      setSelectedBeneficiaries([]);
+      setAmount(0);
+      setDescription("");
+      setOpenTransactionEditor(false);
+      mutate(`/api/bill/${params.id}`);
     } catch (e) {
       console.log(e);
     }
@@ -96,10 +99,10 @@ export default function BillNewTransactionPage({
           <CardHeader>
             <CardTitle className="mb-2">{data.bill_name}</CardTitle>
             <CardDescription className="flex flex-wrap gap-1">
-              {data.participants.map((participant, index) => (
+              {data.participants.map((participant) => (
                 <Avatar
                   className="h-8 w-8 text-white"
-                  key={participant.id}
+                  key={`header_avatar_${participant.id}`}
                   username={participant.name}
                 />
               ))}
@@ -124,7 +127,7 @@ export default function BillNewTransactionPage({
               <div className="grid gap-2">
                 {data.transactions.map((transaction) => (
                   <Card key={`transaction_${transaction.id}`}>
-                    <CardContent className="grid gap-2">
+                    <CardContent className="grid gap-2 p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Avatar
@@ -135,13 +138,26 @@ export default function BillNewTransactionPage({
                             <div className="font-medium">
                               {transaction.description}
                             </div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">
-                              {timestampToString(transaction.timestamp)}
+
+                            <div className="flex space-x-0.5">
+                              <RightArrow className="h-5 w-5"></RightArrow>
+                              {transaction.beneficiary_ids.map((id) => (
+                                <Avatar
+                                  key={`recent_transactions_avatar_${id}`}
+                                  className="h-5 w-5 text-xs"
+                                  username={getNameByUserId(id)}
+                                ></Avatar>
+                              ))}
                             </div>
                           </div>
                         </div>
-                        <div className="font-medium text-green-500">
-                          ￥{transaction.amount}
+                        <div className="flex items-end flex-col">
+                          <div className="text-sm text-gray-500 dark:text-gray-400">
+                            {timestampToString(transaction.timestamp)}
+                          </div>
+                          <div className="font-medium text-green-500">
+                            ￥{transaction.amount}
+                          </div>
                         </div>
                       </div>
                     </CardContent>
@@ -154,7 +170,7 @@ export default function BillNewTransactionPage({
 
         {isOpenTransactionEditor ? (
           <Card>
-            <CardHeader>
+            <CardHeader className="pb-0">
               <CardTitle>Add Transaction</CardTitle>
               <CardDescription>
                 Split expenses with your friends.

@@ -82,14 +82,14 @@ export function stringToHexColor(str: string) {
   return rgbColor;
 }
 
-export async function fetchData(path: string) {
-  const res = await fetch(`${getBaseUrl()}${path}`);
+export async function fetchData(url: string) {
+  const res = await fetch(url);
   const { data } = await res.json();
   return data;
 };
 
-export async function postData<T>(path: string, data: unknown): Promise<T> {
-  const res = await fetch(`${getBaseUrl()}${path}`, {
+export async function postData<T>(url: string, data: unknown): Promise<T> {
+  const res = await fetch(url, {
     method: "POST",
     body: JSON.stringify(data),
   });
