@@ -14,9 +14,10 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getBaseUrl, getColorByIndex } from "@/lib/utils";
+import { getBaseUrl, getColorByIndex, postData } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import useSWRMutation from "swr/mutation";
 
 const STEP = {
   INPUT_NEW_BILL: "INPUT_NEW_BILL",
@@ -24,11 +25,14 @@ const STEP = {
 };
 
 export default function CreateBill() {
+  const participantInputRef = useRef<HTMLInputElement>(null);
   const [step, setStep] = useState(STEP.INPUT_NEW_BILL);
   const [participants, setParticipants] = useState<string[]>([]);
   const [newParticipantName, setNewParticipantName] = useState("");
   const [billName, setBillName] = useState("");
   const router = useRouter();
+
+  const { trigger, isMutating } = useSWRMutation("/api/bill", postData);
 
   function addParticipant(name: string) {
     if (name.length === 0) {
@@ -36,6 +40,7 @@ export default function CreateBill() {
     }
     setParticipants([...participants, name]);
     setNewParticipantName("");
+    participantInputRef.current?.focus();
   }
 
   function removeParticipant(indexToRemove: number) {
@@ -97,6 +102,7 @@ export default function CreateBill() {
                   <div className="flex items-center gap-2">
                     <Input
                       id="participants"
+                      ref={participantInputRef}
                       value={newParticipantName}
                       onChange={(event) =>
                         setNewParticipantName(event.target.value)
@@ -116,18 +122,16 @@ export default function CreateBill() {
                   {participants.map((participant, index) => {
                     return (
                       <div
-                        className="flex items-center gap-2"
+                        className="flex items-center justify-between"
                         key={`participant_${index}`}
                       >
-                        <Avatar
-                          className="h-8 w-8 text-white"
-                          style={{
-                            backgroundColor: `${getColorByIndex(index)}`,
-                          }}
-                        >
-                          {participant.slice(0, 1).toUpperCase()}
-                        </Avatar>
-                        <span className="font-medium">{participant}</span>
+                        <div className="flex items-center gap-2">
+                          <Avatar
+                            className="h-8 w-8 text-white"
+                            username={participant}
+                          />
+                          <span className="font-medium">{participant}</span>
+                        </div>
                         <Button
                           size="icon"
                           variant="outline"
@@ -167,12 +171,8 @@ export default function CreateBill() {
                     <div className="flex items-center gap-2">
                       <Avatar
                         className="h-8 w-8 text-white"
-                        style={{
-                          backgroundColor: `${getColorByIndex(index)}`,
-                        }}
-                      >
-                        {participant.slice(0, 1).toUpperCase()}
-                      </Avatar>
+                        username={participant}
+                      />
                       <span className="font-medium">{participant}</span>
                     </div>
                   </div>
