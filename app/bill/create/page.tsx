@@ -14,10 +14,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getBaseUrl, postData } from "@/lib/utils";
+import { postData } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-import useSWRMutation from "swr/mutation";
 
 const STEP = {
   INPUT_NEW_BILL: "INPUT_NEW_BILL",
@@ -31,8 +30,6 @@ export default function CreateBill() {
   const [newParticipantName, setNewParticipantName] = useState("");
   const [billName, setBillName] = useState("");
   const router = useRouter();
-
-  const { trigger, isMutating } = useSWRMutation("/api/bill", postData);
 
   function addParticipant(name: string) {
     if (name.length === 0) {
@@ -59,17 +56,15 @@ export default function CreateBill() {
 
   async function sendCreateBillRequest() {
     const data = { bill_name: billName, participants: participants };
-    const response = await fetch(`${getBaseUrl()}/api/bill`, {
-      method: "POST",
-      body: JSON.stringify(data),
-    });
-
     try {
-      const result = await response.json();
-      const billId = result.data?.bill_id;
-      if (billId) {
-        router.push(`/bill/${billId}`);
+      const { bill_id: billId } = await postData<{ bill_id: string }>(
+        "/api/bill",
+        data
+      );
+      if (!billId) {
+        throw new Error("bill id not found");
       }
+      router.push(`/bill/${billId}`);
     } catch (e) {
       console.log(e);
     }

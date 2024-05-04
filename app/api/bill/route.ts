@@ -2,29 +2,11 @@
 import { RedisClient } from "@/lib/redis";
 import { createFailedNextResponse, createSuccessNextResponse, generateUuid } from "@/lib/utils";
 
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiResponse } from "next";
 import { z } from "zod";
+import { Bill } from "@/lib/redis";
 
 const redisClient = new RedisClient();
-
-interface Participant {
-  id: string;
-  name: string;
-}
-
-interface Transaction {
-  id: string,
-  name: string;
-  amount: number;
-  payer_id: string;
-  beneficiary_ids: string[];
-}
-
-export interface Bill {
-  bill_name: string;
-  participants: Participant[]
-  transactions: Transaction[]
-}
 
 export async function POST(req: Request,
   res: NextApiResponse) {

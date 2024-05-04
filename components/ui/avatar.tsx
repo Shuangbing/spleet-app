@@ -13,7 +13,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
     return (
       <div
         className={cn(
-          "flex h-full w-full items-center justify-center rounded-full font-bold bg-gray-100 text-black select-none",
+          "flex h-full w-full items-center justify-center rounded-full font-bold bg-gray-100 text-white select-none",
           className
         )}
         style={{ backgroundColor: `${stringToHexColor(username)}` }}

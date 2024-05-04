@@ -2,7 +2,6 @@ import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import * as crypto from 'crypto';
 import { NextResponse } from "next/server";
-import { promise } from "zod";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -89,9 +88,21 @@ export async function fetchData(path: string) {
   return data;
 };
 
-export async function postData<T>(path: string, { arg }: { arg: T }) {
-  await fetch(`${getBaseUrl()}${path}`, {
+export async function postData<T>(path: string, data: unknown): Promise<T> {
+  const res = await fetch(`${getBaseUrl()}${path}`, {
     method: "POST",
-    body: JSON.stringify({ ...arg }),
+    body: JSON.stringify(data),
   });
+  const { data: resData }: { data: T } = await res.json();
+  return resData;
 };
+
+export function timestampToString(timestamp: number) {
+  const userLocale = navigator.language;
+  const formattedDate = new Intl.DateTimeFormat(userLocale, {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  }).format(timestamp);
+
+  return formattedDate;
+}
