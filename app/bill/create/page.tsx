@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { getBaseUrl, getColorByIndex, postData } from "@/lib/utils";
+import { getBaseUrl, postData } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import useSWRMutation from "swr/mutation";
