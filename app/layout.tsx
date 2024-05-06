@@ -27,8 +27,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <div className="flex h-screen w-full flex-col bg-gray-100 dark:bg-gray-950">
-          <header className="sticky top-0 z-10 flex h-16 w-full items-center justify-between bg-white px-4 shadow-sm dark:bg-gray-900">
+        <div className="flex w-full flex-col bg-gray-100 dark:bg-gray-950">
+          <header className="flex h-16 w-full items-center justify-between bg-white px-4 shadow-sm dark:bg-gray-900">
             <Link className="flex items-center gap-2" href="#">
               <WalletIcon className="h-6 w-6" />
               <span className="text-lg font-semibold">Spleet!</span>
