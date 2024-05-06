@@ -1,11 +1,11 @@
 import Redis from 'ioredis';
 
-interface Participant {
+export interface Participant {
   id: string;
   name: string;
 }
 
-interface Transaction {
+export interface Transaction {
   id: string,
   description: string;
   amount: number;

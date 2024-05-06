@@ -2,6 +2,7 @@ import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 import * as crypto from 'crypto';
 import { NextResponse } from "next/server";
+import { Participant, Transaction } from "./redis";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -105,4 +106,81 @@ export function timestampToString(timestamp: number) {
   }).format(timestamp);
 
   return formattedDate;
+}
+
+export function generatePaymentSuggestions(participants: Participant[], transactions: Transaction[]) {
+  const balances: { [key: string]: { name: string; paid: number; owed: number; balance: number; } } = {};
+  participants.forEach(participant => {
+    balances[participant.id] = {
+      name: participant.name,
+      paid: 0,
+      owed: 0,
+      balance: 0
+    };
+  });
+
+  // 处理每笔交易
+  transactions.forEach(transaction => {
+    const payer = transaction.payer_id;
+    const amount = transaction.amount;
+    const beneficiaries: string[] = transaction.beneficiary_ids;
+    const perPerson = amount / beneficiaries.length; // 平均分配
+
+    // 记录付款人支付的金额
+    balances[payer].paid += amount;
+
+    // 记录每个受益者的份额
+    beneficiaries.forEach(beneficiary => {
+      balances[beneficiary].owed += perPerson;
+    });
+  });
+
+  // 计算每个参与者的净余额
+  for (const key in balances) {
+    const balance = balances[key];
+    balance.balance = balance.paid - balance.owed;
+  }
+
+  // 创建支付建议
+  const payments = [];
+
+  // 获取正和负的余额
+  const positiveBalances = [];
+  const negativeBalances = [];
+
+  for (const key in balances) {
+    const balance = balances[key];
+    if (balance.balance > 0) {
+      positiveBalances.push(balance);
+    } else if (balance.balance < 0) {
+      negativeBalances.push(balance);
+    }
+  }
+
+  // 平衡正负余额
+  while (negativeBalances.length > 0 && positiveBalances.length > 0) {
+    const debtor = negativeBalances[0];
+    const creditor = positiveBalances[0];
+    const paymentAmount = Math.min(Math.abs(debtor.balance), creditor.balance);
+
+    payments.push({
+      from: debtor.name,
+      to: creditor.name,
+      amount: paymentAmount
+    });
+
+    // 更新净余额
+    debtor.balance += paymentAmount;
+    creditor.balance -= paymentAmount;
+
+    // 如果净余额为零，则从数组中删除
+    if (Math.abs(debtor.balance) < 1e-6) {
+      negativeBalances.shift();
+    }
+
+    if (Math.abs(creditor.balance) < 1e-6) {
+      positiveBalances.shift();
+    }
+  }
+  return payments;
 }

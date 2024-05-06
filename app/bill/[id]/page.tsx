@@ -22,9 +22,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import { cn, fetchData, postData, timestampToString } from "@/lib/utils";
+import {
+  cn,
+  fetchData,
+  generatePaymentSuggestions,
+  postData,
+  timestampToString,
+} from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { RightArrow } from "../../../components/icons/RightArrow";
 import { useSWRConfig } from "swr";
@@ -83,6 +89,15 @@ export default function BillPage({ params }: { params: { id: string } }) {
       setOpenTransactionEditor(true);
     }
   }, [data]);
+
+  const paymentSuggestions = useMemo(
+    () =>
+      generatePaymentSuggestions(
+        data?.participants || [],
+        data?.transactions || []
+      ),
+    [data?.participants, data?.transactions]
+  );
 
   if (!data) {
     return null;
@@ -164,6 +179,47 @@ export default function BillPage({ params }: { params: { id: string } }) {
                   </Card>
                 ))}
               </div>
+
+              {paymentSuggestions.length > 0 ? (
+                <>
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl font-semibold">
+                      Payment Suggestions
+                    </h2>
+                  </div>
+                  <Card className="mb-6">
+                    <CardHeader className="p-4">
+                      <CardDescription className="grid gap-2">
+                        {paymentSuggestions.map((suggestion, index) => (
+                          <div
+                            key={`sugestion_${index}`}
+                            className="flex items-center justify-between"
+                          >
+                            <div className="flex items-center">
+                              <Avatar
+                                className="h-8 w-8 text-white"
+                                key={`header_avatar_${suggestion.from}`}
+                                username={suggestion.from}
+                              />
+                              <RightArrow />
+                              <Avatar
+                                className="h-8 w-8 text-white"
+                                key={`header_avatar_${suggestion.to}`}
+                                username={suggestion.to}
+                              />
+                            </div>
+                            <div className="flex items-end flex-col">
+                              <div className="font-medium text-green-500">
+                                ￥{suggestion.amount}
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </CardDescription>
+                    </CardHeader>
+                  </Card>
+                </>
+              ) : null}
             </div>
           </>
         ) : null}
