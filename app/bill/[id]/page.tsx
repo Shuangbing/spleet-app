@@ -140,44 +140,47 @@ export default function BillPage({ params }: { params: { id: string } }) {
                 <h2 className="text-xl font-semibold">Recent Transactions</h2>
               </div>
               <div className="grid gap-2">
-                {data.transactions.map((transaction) => (
-                  <Card key={`transaction_${transaction.id}`}>
-                    <CardContent className="grid gap-2 p-4">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <Avatar
-                            className="h-8 w-8"
-                            username={getNameByUserId(transaction.payer_id)}
-                          ></Avatar>
-                          <div>
-                            <div className="font-medium">
-                              {transaction.description}
-                            </div>
+                {data.transactions
+                  .slice()
+                  .reverse()
+                  .map((transaction) => (
+                    <Card key={`transaction_${transaction.id}`}>
+                      <CardContent className="grid gap-2 p-4">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <Avatar
+                              className="h-8 w-8"
+                              username={getNameByUserId(transaction.payer_id)}
+                            ></Avatar>
+                            <div>
+                              <div className="font-medium">
+                                {transaction.description}
+                              </div>
 
-                            <div className="flex space-x-0.5">
-                              <RightArrow className="h-5 w-5"></RightArrow>
-                              {transaction.beneficiary_ids.map((id) => (
-                                <Avatar
-                                  key={`recent_transactions_avatar_${id}`}
-                                  className="h-5 w-5 text-xs"
-                                  username={getNameByUserId(id)}
-                                ></Avatar>
-                              ))}
+                              <div className="flex flex-wrap gap-y-0.5 space-x-0.5">
+                                <RightArrow className="h-5 w-5"></RightArrow>
+                                {transaction.beneficiary_ids.map((id) => (
+                                  <Avatar
+                                    key={`recent_transactions_avatar_${id}`}
+                                    className="h-5 w-5 text-xs"
+                                    username={getNameByUserId(id)}
+                                  ></Avatar>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-end flex-col">
+                            <div className="text-sm text-gray-500 dark:text-gray-400">
+                              {timestampToString(transaction.timestamp)}
+                            </div>
+                            <div className="font-medium text-green-500">
+                              ￥{transaction.amount}
                             </div>
                           </div>
                         </div>
-                        <div className="flex items-end flex-col">
-                          <div className="text-sm text-gray-500 dark:text-gray-400">
-                            {timestampToString(transaction.timestamp)}
-                          </div>
-                          <div className="font-medium text-green-500">
-                            ￥{transaction.amount}
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
+                      </CardContent>
+                    </Card>
+                  ))}
               </div>
 
               {paymentSuggestions.length > 0 ? (
@@ -196,17 +199,23 @@ export default function BillPage({ params }: { params: { id: string } }) {
                             className="flex items-center justify-between"
                           >
                             <div className="flex items-center">
-                              <Avatar
-                                className="h-8 w-8 text-white"
-                                key={`header_avatar_${suggestion.from}`}
-                                username={suggestion.from}
-                              />
+                              <div className="flex gap-1 items-center font-bold">
+                                <Avatar
+                                  className="h-8 w-8 text-white"
+                                  key={`header_avatar_${suggestion.from}`}
+                                  username={suggestion.from}
+                                />
+                                {suggestion.from}
+                              </div>
                               <RightArrow />
-                              <Avatar
-                                className="h-8 w-8 text-white"
-                                key={`header_avatar_${suggestion.to}`}
-                                username={suggestion.to}
-                              />
+                              <div className="flex gap-1 items-center font-bold">
+                                <Avatar
+                                  className="h-8 w-8 text-white"
+                                  key={`header_avatar_${suggestion.to}`}
+                                  username={suggestion.to}
+                                />
+                                {suggestion.to}
+                              </div>
                             </div>
                             <div className="flex items-end flex-col">
                               <div className="font-medium text-green-500">
@@ -263,7 +272,7 @@ export default function BillPage({ params }: { params: { id: string } }) {
               </div>
               <div className="grid gap-2">
                 <Label>Beneficiaries</Label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {data.participants.map((participant, index) => (
                     <Card
                       key={`card_${participant.id}`}
