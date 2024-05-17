@@ -29,7 +29,6 @@ export default async function RootLayout({
       <body className="bg-gray-100 dark:bg-gray-950">
         <header className="flex h-16 w-full items-center justify-between px-4 shadow-sm bg-white dark:bg-gray-900">
           <Link className="flex items-center gap-2" href="/">
-            <WalletIcon className="h-6 w-6" />
             <span className="text-lg font-semibold">Spleet!</span>
           </Link>
           <div className="rounded-full">
