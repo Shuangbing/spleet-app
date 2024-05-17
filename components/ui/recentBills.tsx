@@ -14,7 +14,7 @@ const RecentBills: React.FC = () => {
     setRecentBills(getRecentBills());
   }, []);
 
-  return (
+  return recentBills.length > 0 ? (
     <div className="grid gap-4 mt-4">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">{t("recentBills")}</h2>
@@ -36,7 +36,7 @@ const RecentBills: React.FC = () => {
         })}
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default RecentBills;
