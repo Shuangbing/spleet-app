@@ -34,8 +34,10 @@ import useSWR from "swr";
 import { RightArrow } from "../../../components/icons/RightArrow";
 import { useSWRConfig } from "swr";
 import { useOverlay } from "@/app/context/OverlayContext";
+import { updateRecentBills } from "@/lib/clientUtils";
 
 export default function BillPage({ params }: { params: { id: string } }) {
+  const billId = params.id;
   const t = useTranslations("BillPage");
   const { data } = useSWR<Bill>(`/api/bill/${params.id}`, fetchData);
   const [selectedBeneficiaries, setSelectedBeneficiaries] = useState<string[]>(
@@ -86,13 +88,13 @@ export default function BillPage({ params }: { params: { id: string } }) {
       description,
     };
     try {
-      await postData(`/api/bill/${params.id}`, data);
+      await postData(`/api/bill/${billId}`, data);
       setPayer("");
       setSelectedBeneficiaries([]);
       setAmount(0);
       setDescription("");
       setOpenTransactionEditor(false);
-      mutate(`/api/bill/${params.id}`);
+      mutate(`/api/bill/${billId}`);
     } catch (e) {
       console.log(e);
     }
@@ -112,6 +114,13 @@ export default function BillPage({ params }: { params: { id: string } }) {
       ),
     [data?.participants, data?.transactions]
   );
+
+  useEffect(() => {
+    if (!data) {
+      return;
+    }
+    updateRecentBills({ id: billId, name: data.bill_name });
+  }, [data]);
 
   if (!data) {
     return null;

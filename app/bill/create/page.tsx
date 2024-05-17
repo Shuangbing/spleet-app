@@ -18,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useOverlay } from "@/app/context/OverlayContext";
-import Overlay from "@/components/ui/overlay";
+import RecentBills from "@/components/ui/recentBills";
 
 const STEP = {
   INPUT_NEW_BILL: "INPUT_NEW_BILL",
@@ -81,79 +81,82 @@ export default function CreateBill() {
     <main className="flex-1 overflow-auto p-4 sm:p-6">
       <div className="mx-auto max-w-md">
         {step === STEP.INPUT_NEW_BILL ? (
-          <Card className="mb-6">
-            <CardHeader className="pb-0">
-              <CardTitle>{t("newBillTitle")}</CardTitle>
-              <CardDescription>{t("newBillDescription")}</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="name">{t("billNameLabel")}</Label>
-                <Input
-                  id="name"
-                  value={billName}
-                  onChange={(event) => setBillName(event.target.value)}
-                  placeholder={t("billNamePlaceholder")}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="participants">{t("participantsLabel")}</Label>
-                <div className="grid gap-2">
-                  <div className="flex items-center gap-2 pb-2">
-                    <Input
-                      id="participants"
-                      ref={participantInputRef}
-                      value={newParticipantName}
-                      onChange={(event) =>
-                        setNewParticipantName(event.target.value)
-                      }
-                      placeholder={t("addParticipant")}
-                    />
-                    <Button
-                      size="icon"
-                      variant="outline"
-                      onClick={() => addParticipant(newParticipantName)}
-                    >
-                      <PlusIcon className="h-4 w-4" />
-                      <span className="sr-only">{t("addParticipant")}</span>
-                    </Button>
-                  </div>
-
-                  {participants.map((participant, index) => {
-                    return (
-                      <div
-                        className="flex items-center justify-between"
-                        key={`participant_${index}`}
-                      >
-                        <div className="flex items-center gap-2">
-                          <Avatar
-                            className="h-8 w-8 text-white"
-                            username={participant}
-                          />
-                          <span className="font-medium">{participant}</span>
-                        </div>
-                        <Button
-                          size="icon"
-                          variant="outline"
-                          onClick={() => removeParticipant(index)}
-                        >
-                          <XIcon className="h-4 w-4" />
-                          <span className="sr-only">
-                            {t("removeParticipant")}
-                          </span>
-                        </Button>
-                      </div>
-                    );
-                  })}
+          <>
+            <Card className="mb-6">
+              <CardHeader className="pb-0">
+                <CardTitle>{t("newBillTitle")}</CardTitle>
+                <CardDescription>{t("newBillDescription")}</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">{t("billNameLabel")}</Label>
+                  <Input
+                    id="name"
+                    value={billName}
+                    onChange={(event) => setBillName(event.target.value)}
+                    placeholder={t("billNamePlaceholder")}
+                  />
                 </div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button className="w-full" onClick={() => confirmNewBillForm()}>
-                {t("nextButton")}
-              </Button>
-            </CardFooter>
-          </Card>
+                <div className="space-y-2">
+                  <Label htmlFor="participants">{t("participantsLabel")}</Label>
+                  <div className="grid gap-2">
+                    <div className="flex items-center gap-2 pb-2">
+                      <Input
+                        id="participants"
+                        ref={participantInputRef}
+                        value={newParticipantName}
+                        onChange={(event) =>
+                          setNewParticipantName(event.target.value)
+                        }
+                        placeholder={t("addParticipant")}
+                      />
+                      <Button
+                        size="icon"
+                        variant="outline"
+                        onClick={() => addParticipant(newParticipantName)}
+                      >
+                        <PlusIcon className="h-4 w-4" />
+                        <span className="sr-only">{t("addParticipant")}</span>
+                      </Button>
+                    </div>
+
+                    {participants.map((participant, index) => {
+                      return (
+                        <div
+                          className="flex items-center justify-between"
+                          key={`participant_${index}`}
+                        >
+                          <div className="flex items-center gap-2">
+                            <Avatar
+                              className="h-8 w-8 text-white"
+                              username={participant}
+                            />
+                            <span className="font-medium">{participant}</span>
+                          </div>
+                          <Button
+                            size="icon"
+                            variant="outline"
+                            onClick={() => removeParticipant(index)}
+                          >
+                            <XIcon className="h-4 w-4" />
+                            <span className="sr-only">
+                              {t("removeParticipant")}
+                            </span>
+                          </Button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button className="w-full" onClick={() => confirmNewBillForm()}>
+                  {t("nextButton")}
+                </Button>
+              </CardFooter>
+            </Card>
+            <RecentBills />
+          </>
         ) : null}
         {step === STEP.COMFIRM_NEW_BILL ? (
           <Card>

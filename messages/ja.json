@@ -23,6 +23,8 @@
     "newBillDescription": "グループを作成し、費用を分割する参加者を追加します。",
     "billNameLabel": "グループ名",
     "billNamePlaceholder": "沖縄の旅 ⛱️",
+    "recentBills": "最近のグループ",
+    "open": "開く",
     "participantsLabel": "参加者",
     "addParticipant": "参加者の名前を入力してください",
     "removeParticipant": "参加者を削除",

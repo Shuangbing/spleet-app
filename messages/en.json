@@ -23,6 +23,8 @@
     "newBillDescription": "Create a new bill and add participants to split the cost.",
     "billNameLabel": "Bill Name",
     "billNamePlaceholder": "japan trip 🇯🇵",
+    "recentBills": "Recent Bills",
+    "open": "Open",
     "participantsLabel": "Participants",
     "addParticipant": "Enter the name of the participant.",
     "removeParticipant": "Remove participant",

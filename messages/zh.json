@@ -23,6 +23,8 @@
     "newBillDescription": "创建一个群组，并添加分摊费用的参与者。",
     "billNameLabel": "群组名称",
     "billNamePlaceholder": "北京之行 🇨🇳",
+    "recentBills": "最近的群组",
+    "open": "打开",
     "participantsLabel": "参与者",
     "addParticipant": "输入参与者姓名",
     "removeParticipant": "删除参与者",
