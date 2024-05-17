@@ -1,0 +1,45 @@
+{
+  "Home": {
+    "spleetTitle": "Spleet!",
+    "spleetSubtitle": "轻松解决与朋友的AA制！",
+    "spleetDescription": "Spleet! 是一个方便的应用程序，允许您与朋友在团体环境中轻松分摊费用。无论是在餐厅用餐还是旅行中的花费，都能消除与金钱交易相关的压力。",
+    "getStartedButton": "开始",
+    "transparentSplittingTitle": "透明的分摊",
+    "transparentSplittingDescription": "在 Spleet! 中，我们清楚地显示了谁为什么支付了多少。这样可以公平地分配每个成员的费用。",
+    "instantCalculationTitle": "即时计算",
+    "instantCalculationDescription": "Spleet! 会为您处理繁琐的分摊费用计算。它会立即计算付款金额并立即分享结果。",
+    "easyOperationTitle": "简单操作",
+    "easyOperationDescription": "通过直观的界面，任何人都可以轻松使用 Spleet!。无需特殊技能。",
+    "copyright": "© 2024 Spleet!",
+    "privacyPolicyLink": "隐私政策",
+    "contactUsLink": "联系我们"
+  },
+  "CreateBill": {
+    "newBillTitle": "创建新群组",
+    "newBillDescription": "创建一个群组，并添加分摊费用的参与者。",
+    "billNameLabel": "群组名称",
+    "billNamePlaceholder": "在海底捞的晚餐",
+    "participantsLabel": "参与者",
+    "addParticipant": "添加参与者",
+    "removeParticipant": "删除参与者",
+    "nextButton": "下一步",
+    "billTitle": "{billName}",
+    "billDescription": "{participants} 人分担群组交易。",
+    "createNewBillButton": "创建新群组"
+  },
+  "BillPage": {
+    "addTransactionTitle": "新增交易",
+    "addTransactionDescription": "与朋友分摊费用。",
+    "payerLabel": "支付者",
+    "selectPayerPlaceholder": "选择支付者",
+    "beneficiariesLabel": "受益者",
+    "amountLabel": "金额",
+    "enterAmountPlaceholder": "输入金额",
+    "descriptionLabel": "描述",
+    "enterDescriptionPlaceholder": "输入描述",
+    "addTransactionButton": "添加",
+    "backToTransactionsButton": "返回",
+    "recentTransactionsTitle": "最近的交易",
+    "paymentSuggestionsTitle": "支付建议"
+  }
+}

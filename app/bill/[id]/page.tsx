@@ -1,5 +1,5 @@
 "use client";
-
+import { useTranslations } from "next-intl";
 import { Bill } from "@/lib/redis";
 import { Avatar } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -29,13 +29,13 @@ import {
   postData,
   timestampToString,
 } from "@/lib/utils";
-import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { RightArrow } from "../../../components/icons/RightArrow";
 import { useSWRConfig } from "swr";
 
 export default function BillPage({ params }: { params: { id: string } }) {
+  const t = useTranslations("BillPage");
   const { data } = useSWR<Bill>(`/api/bill/${params.id}`, fetchData);
   const [selectedBeneficiaries, setSelectedBeneficiaries] = useState<string[]>(
     []
@@ -132,12 +132,14 @@ export default function BillPage({ params }: { params: { id: string } }) {
               variant="outline"
               onClick={() => setOpenTransactionEditor(true)}
             >
-              Add Transaction
+              {t("addTransactionTitle")}
             </Button>
 
             <div className="grid gap-4 mt-4">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">Recent Transactions</h2>
+                <h2 className="text-xl font-semibold">
+                  {t("recentTransactionsTitle")}
+                </h2>
               </div>
               <div className="grid gap-2">
                 {data.transactions
@@ -187,7 +189,7 @@ export default function BillPage({ params }: { params: { id: string } }) {
                 <>
                   <div className="flex items-center justify-between">
                     <h2 className="text-xl font-semibold">
-                      Payment Suggestions
+                      {t("paymentSuggestionsTitle")}
                     </h2>
                   </div>
                   <Card className="mb-6">
@@ -219,7 +221,7 @@ export default function BillPage({ params }: { params: { id: string } }) {
                             </div>
                             <div className="flex items-end flex-col">
                               <div className="font-medium text-green-500">
-                                ￥{suggestion.amount}
+                                ￥{Math.ceil(suggestion.amount)}
                               </div>
                             </div>
                           </div>
@@ -236,20 +238,20 @@ export default function BillPage({ params }: { params: { id: string } }) {
         {isOpenTransactionEditor ? (
           <Card>
             <CardHeader className="pb-0">
-              <CardTitle>Add Transaction</CardTitle>
+              <CardTitle>{t("addTransactionTitle")}</CardTitle>
               <CardDescription>
-                Split expenses with your friends.
+                {t("addTransactionDescription")}
               </CardDescription>
             </CardHeader>
             <CardContent className="grid gap-4">
               <div className="grid gap-2">
-                <Label>Payer</Label>
+                <Label>{t("payerLabel")}</Label>
                 <Select
                   value={payer}
-                  onValueChange={(value) => setPayer(value)}
+                  onValueChange={(value: string) => setPayer(value)}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select payer" />
+                    <SelectValue placeholder={t("selectPayerPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {data.participants.map((participant) => (
@@ -271,7 +273,7 @@ export default function BillPage({ params }: { params: { id: string } }) {
                 </Select>
               </div>
               <div className="grid gap-2">
-                <Label>Beneficiaries</Label>
+                <Label>{t("beneficiariesLabel")}</Label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {data.participants.map((participant, index) => (
                     <Card
@@ -312,18 +314,18 @@ export default function BillPage({ params }: { params: { id: string } }) {
                 </div>
               </div>
               <div className="grid gap-2">
-                <Label>Amount</Label>
+                <Label>{t("amountLabel")}</Label>
                 <Input
-                  placeholder="Enter amount"
+                  placeholder={t("enterAmountPlaceholder")}
                   type="number"
                   value={amount ? String(amount) : ""}
                   onChange={(event) => setAmount(Number(event.target.value))}
                 />
               </div>
               <div className="grid gap-2">
-                <Label>Description</Label>
+                <Label>{t("descriptionLabel")}</Label>
                 <Input
-                  placeholder="Enter description"
+                  placeholder={t("enterDescriptionPlaceholder")}
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
                 />
@@ -331,14 +333,14 @@ export default function BillPage({ params }: { params: { id: string } }) {
             </CardContent>
             <CardFooter className="flex flex-col space-y-2">
               <Button className="w-full" onClick={() => handleAddTransaction()}>
-                Add Transaction
+                {t("addTransactionButton")}
               </Button>
               <Button
                 className="w-full"
                 variant="outline"
                 onClick={() => setOpenTransactionEditor(false)}
               >
-                Back to transactions
+                {t("backToTransactionsButton")}
               </Button>
             </CardFooter>
           </Card>

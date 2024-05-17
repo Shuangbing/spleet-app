@@ -1,0 +1,45 @@
+{
+  "Home": {
+    "spleetTitle": "Spleet!",
+    "spleetSubtitle": "Easily Split Bills with Friends!",
+    "spleetDescription": "Spleet! is a convenient web app that allows you to easily split bills with friends in group settings. Say goodbye to the stress of handling money transactions, whether it's dining out at a restaurant or expenses during trips.",
+    "getStartedButton": "Get Started",
+    "transparentSplittingTitle": "Transparent Splitting",
+    "transparentSplittingDescription": "In Spleet!, we clearly display who paid how much for what. This enables fair distribution of expenses among each member.",
+    "instantCalculationTitle": "Instant Calculation",
+    "instantCalculationDescription": "Spleet! takes care of the cumbersome bill splitting calculations for you. It instantly calculates payment amounts and shares the results immediately.",
+    "easyOperationTitle": "Easy Operation",
+    "easyOperationDescription": "With an intuitive interface, anyone can easily use Spleet!. No special skills are required.",
+    "copyright": "© 2024 Spleet!. All rights reserved.",
+    "privacyPolicyLink": "Privacy Policy",
+    "contactUsLink": "Contact Us"
+  },
+  "CreateBill": {
+    "newBillTitle": "New bill",
+    "newBillDescription": "Create a new bill and add participants to split the cost.",
+    "billNameLabel": "Bill Name",
+    "billNamePlaceholder": "Dinner at Acme Restaurant",
+    "participantsLabel": "Participants",
+    "addParticipant": "Add participant",
+    "removeParticipant": "Remove participant",
+    "nextButton": "Next",
+    "billTitle": "{billName}",
+    "billDescription": "{participants} participants split the bill.",
+    "createNewBillButton": "Create a new bill"
+  },
+  "BillPage": {
+    "addTransactionTitle": "Add Transaction",
+    "addTransactionDescription": "Split expenses with your friends.",
+    "payerLabel": "Payer",
+    "selectPayerPlaceholder": "Select payer",
+    "beneficiariesLabel": "Beneficiaries",
+    "amountLabel": "Amount",
+    "enterAmountPlaceholder": "Enter amount",
+    "descriptionLabel": "Description",
+    "enterDescriptionPlaceholder": "Enter description",
+    "addTransactionButton": "Add Transaction",
+    "backToTransactionsButton": "Back to transactions",
+    "recentTransactionsTitle": "Recent Transactions",
+    "paymentSuggestionsTitle": "Payment Suggestions"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "Home": {
+    "spleetTitle": "Spleet!",
+    "spleetSubtitle": "友達との割り勘を楽々解決！",
+    "spleetDescription": "グループ単位で友達と簡単に割り勘計算ができる便利なWebアプリです。レストランでの食事や旅行先での支出などお金のやり取りに関するストレスを一掃します。",
+    "getStartedButton": "はじめる",
+    "transparentSplittingTitle": "透明な分担",
+    "transparentSplittingDescription": "Spleet!では、誰が何にいくら支払ったかを明確に表示します。各メンバーの負担を公平に分担することができます。",
+    "instantCalculationTitle": "即時計算",
+    "instantCalculationDescription": "手間のかかる割り勘計算をSpleet!が代行。瞬時に支払い額を計算し、すぐに結果を共有します。",
+    "easyOperationTitle": "簡単な操作",
+    "easyOperationDescription": "直感的なインターフェースで、誰でも簡単に利用できます。特別なスキルは必要ありません。",
+    "copyright": "© 2024 Spleet!. All rights reserved.",
+    "privacyPolicyLink": "プライバシーポリシー",
+    "contactUsLink": "お問い合わせ"
+  },
+  "CreateBill": {
+    "newBillTitle": "新しいグループ",
+    "newBillDescription": "グループを作成し、費用を分割する参加者を追加します。",
+    "billNameLabel": "グループ名",
+    "billNamePlaceholder": "叙々苑でのディナー",
+    "participantsLabel": "参加者",
+    "addParticipant": "参加者を追加",
+    "removeParticipant": "参加者を削除",
+    "nextButton": "次へ",
+    "billTitle": "{billName}",
+    "billDescription": "{participants} 人がグループの取引を分割します。",
+    "createNewBillButton": "新しいグループを作成"
+  },
+  "BillPage": {
+    "addTransactionTitle": "新しい取引",
+    "addTransactionDescription": "友達と費用を分割します。",
+    "payerLabel": "支払者",
+    "selectPayerPlaceholder": "支払者を選択",
+    "beneficiariesLabel": "受益者",
+    "amountLabel": "金額",
+    "enterAmountPlaceholder": "金額を入力",
+    "descriptionLabel": "説明",
+    "enterDescriptionPlaceholder": "説明を入力",
+    "addTransactionButton": "追加",
+    "backToTransactionsButton": "戻る",
+    "recentTransactionsTitle": "最近の取引",
+    "paymentSuggestionsTitle": "支払い提案"
+  }
+}

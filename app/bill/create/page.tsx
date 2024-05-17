@@ -1,5 +1,4 @@
 "use client";
-
 import { PlusIcon } from "@/components/icons/PlusIcon";
 import { XIcon } from "@/components/icons/XIcon";
 import { Avatar } from "@/components/ui/avatar";
@@ -17,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { postData } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 const STEP = {
   INPUT_NEW_BILL: "INPUT_NEW_BILL",
@@ -24,6 +24,7 @@ const STEP = {
 };
 
 export default function CreateBill() {
+  const t = useTranslations("CreateBill");
   const participantInputRef = useRef<HTMLInputElement>(null);
   const [step, setStep] = useState(STEP.INPUT_NEW_BILL);
   const [participants, setParticipants] = useState<string[]>([]);
@@ -76,23 +77,21 @@ export default function CreateBill() {
         {step === STEP.INPUT_NEW_BILL ? (
           <Card className="mb-6">
             <CardHeader className="pb-0">
-              <CardTitle>New bill</CardTitle>
-              <CardDescription>
-                Create a new bill and add participants to split the cost.
-              </CardDescription>
+              <CardTitle>{t("newBillTitle")}</CardTitle>
+              <CardDescription>{t("newBillDescription")}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Bill Name</Label>
+                <Label htmlFor="name">{t("billNameLabel")}</Label>
                 <Input
                   id="name"
                   value={billName}
                   onChange={(event) => setBillName(event.target.value)}
-                  placeholder="Dinner at Acme Restaurant"
+                  placeholder={t("billNamePlaceholder")}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="participants">Participants</Label>
+                <Label htmlFor="participants">{t("participantsLabel")}</Label>
                 <div className="grid gap-2">
                   <div className="flex items-center gap-2 pb-2">
                     <Input
@@ -102,7 +101,7 @@ export default function CreateBill() {
                       onChange={(event) =>
                         setNewParticipantName(event.target.value)
                       }
-                      placeholder="Add participant"
+                      placeholder={t("addParticipant")}
                     />
                     <Button
                       size="icon"
@@ -110,7 +109,7 @@ export default function CreateBill() {
                       onClick={() => addParticipant(newParticipantName)}
                     >
                       <PlusIcon className="h-4 w-4" />
-                      <span className="sr-only">Add participant</span>
+                      <span className="sr-only">{t("addParticipant")}</span>
                     </Button>
                   </div>
 
@@ -133,7 +132,9 @@ export default function CreateBill() {
                           onClick={() => removeParticipant(index)}
                         >
                           <XIcon className="h-4 w-4" />
-                          <span className="sr-only">Remove participant</span>
+                          <span className="sr-only">
+                            {t("removeParticipant")}
+                          </span>
                         </Button>
                       </div>
                     );
@@ -143,7 +144,7 @@ export default function CreateBill() {
             </CardContent>
             <CardFooter>
               <Button className="w-full" onClick={() => confirmNewBillForm()}>
-                Next
+                {t("nextButton")}
               </Button>
             </CardFooter>
           </Card>
@@ -151,9 +152,9 @@ export default function CreateBill() {
         {step === STEP.COMFIRM_NEW_BILL ? (
           <Card>
             <CardHeader className="pb-0">
-              <CardTitle>{billName}</CardTitle>
+              <CardTitle>{t("billTitle", { billName })}</CardTitle>
               <CardDescription>
-                {participants.length} participants split the bill.
+                {t("billDescription", { participants: participants.length })}
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -179,7 +180,7 @@ export default function CreateBill() {
                 className="w-full"
                 onClick={() => sendCreateBillRequest()}
               >
-                Create a new bill
+                {t("createNewBillButton")}
               </Button>
             </CardFooter>
           </Card>
