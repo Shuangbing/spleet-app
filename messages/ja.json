@@ -25,7 +25,12 @@
     "nextButton": "次へ",
     "billTitle": "{billName}",
     "billDescription": "{participants} 人がグループの取引を分割します。",
-    "createNewBillButton": "新しいグループを作成"
+    "createNewBillButton": "新しいグループを作成",
+    "groupNameRequired": "グループの名前の入力は必須です",
+    "participantNameRequired": "参加者の名前の入力は必須です",
+    "atLeastOneParticipant": "グループ参加者は最低でも一人が必要です",
+    "creationFailed": "グループ作成できませんでした",
+    "creationError": "グループ作成が失敗しました"
   },
   "BillPage": {
     "addTransactionTitle": "新しい取引",
@@ -40,6 +45,10 @@
     "addTransactionButton": "追加",
     "backToTransactionsButton": "戻る",
     "recentTransactionsTitle": "最近の取引",
-    "paymentSuggestionsTitle": "支払い提案"
+    "paymentSuggestionsTitle": "支払い提案",
+    "payerInfoRequired": "支払者を選択してください",
+    "beneficiariesRequired": "受益者を選択してください",
+    "amountRequired": "金額を入力してください",
+    "descriptionRequired": "説明を入力してください"
   }
 }

@@ -17,6 +17,8 @@ import { postData } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useOverlay } from "@/app/context/OverlayContext";
+import Overlay from "@/components/ui/overlay";
 
 const STEP = {
   INPUT_NEW_BILL: "INPUT_NEW_BILL",
@@ -31,9 +33,11 @@ export default function CreateBill() {
   const [newParticipantName, setNewParticipantName] = useState("");
   const [billName, setBillName] = useState("");
   const router = useRouter();
+  const { showOverlay } = useOverlay();
 
   function addParticipant(name: string) {
     if (name.length === 0) {
+      showOverlay(t("participantNameRequired"));
       return;
     }
     setParticipants([...participants, name]);
@@ -47,9 +51,11 @@ export default function CreateBill() {
 
   function confirmNewBillForm() {
     if (billName.length === 0) {
+      showOverlay(t("groupNameRequired"));
       return;
     }
     if (participants.length === 0) {
+      showOverlay(t("atLeastOneParticipant"));
       return;
     }
     setStep(STEP.COMFIRM_NEW_BILL);
@@ -63,11 +69,11 @@ export default function CreateBill() {
         data
       );
       if (!billId) {
-        throw new Error("bill id not found");
+        showOverlay(t("creationFailed"));
       }
       router.push(`/bill/${billId}`);
     } catch (e) {
-      console.log(e);
+      showOverlay(t("creationError"));
     }
   }
 

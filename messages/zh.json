@@ -25,7 +25,12 @@
     "nextButton": "下一步",
     "billTitle": "{billName}",
     "billDescription": "{participants} 人分担群组交易。",
-    "createNewBillButton": "创建新群组"
+    "createNewBillButton": "创建新群组",
+    "groupNameRequired": "群组名称是必需的",
+    "participantNameRequired": "参与者名称是必需的",
+    "atLeastOneParticipant": "群组至少需要一个参与者",
+    "creationFailed": "无法创建群组",
+    "creationError": "群组创建失败"
   },
   "BillPage": {
     "addTransactionTitle": "新增交易",
@@ -40,6 +45,10 @@
     "addTransactionButton": "添加",
     "backToTransactionsButton": "返回",
     "recentTransactionsTitle": "最近的交易",
-    "paymentSuggestionsTitle": "支付建议"
+    "paymentSuggestionsTitle": "支付建议",
+    "payerInfoRequired": "请选择支付者",
+    "beneficiariesRequired": "请选择受益人",
+    "amountRequired": "请输入金额",
+    "descriptionRequired": "请输入描述信息"
   }
 }

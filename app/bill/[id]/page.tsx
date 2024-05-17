@@ -33,6 +33,7 @@ import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 import { RightArrow } from "../../../components/icons/RightArrow";
 import { useSWRConfig } from "swr";
+import { useOverlay } from "@/app/context/OverlayContext";
 
 export default function BillPage({ params }: { params: { id: string } }) {
   const t = useTranslations("BillPage");
@@ -45,6 +46,7 @@ export default function BillPage({ params }: { params: { id: string } }) {
   const [description, setDescription] = useState("");
   const [isOpenTransactionEditor, setOpenTransactionEditor] = useState(false);
   const { mutate } = useSWRConfig();
+  const { showOverlay } = useOverlay();
 
   function handleCheckboxChange(id: string) {
     setSelectedBeneficiaries((prevValues) => {
@@ -57,14 +59,26 @@ export default function BillPage({ params }: { params: { id: string } }) {
   }
 
   async function handleAddTransaction() {
-    if (
-      !payer ||
-      selectedBeneficiaries.length === 0 ||
-      amount === 0 ||
-      description.length === 0
-    ) {
+    if (!payer) {
+      showOverlay(t("payerInfoRequired"));
       return;
     }
+
+    if (selectedBeneficiaries.length === 0) {
+      showOverlay(t("beneficiariesRequired"));
+      return;
+    }
+
+    if (amount === 0) {
+      showOverlay(t("amountRequired"));
+      return;
+    }
+
+    if (description.length === 0) {
+      showOverlay(t("descriptionRequired"));
+      return;
+    }
+
     const data = {
       payer,
       beneficiaries: selectedBeneficiaries,

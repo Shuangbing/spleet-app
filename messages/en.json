@@ -25,7 +25,12 @@
     "nextButton": "Next",
     "billTitle": "{billName}",
     "billDescription": "{participants} participants split the bill.",
-    "createNewBillButton": "Create a new bill"
+    "createNewBillButton": "Create a new bill",
+    "groupNameRequired": "Bill name input is required",
+    "participantNameRequired": "Participant name input is required",
+    "atLeastOneParticipant": "At least one participant is required for the group",
+    "creationFailed": "Failed to create the group",
+    "creationError": "Group creation failed"
   },
   "BillPage": {
     "addTransactionTitle": "Add Transaction",
@@ -40,6 +45,10 @@
     "addTransactionButton": "Add Transaction",
     "backToTransactionsButton": "Back to transactions",
     "recentTransactionsTitle": "Recent Transactions",
-    "paymentSuggestionsTitle": "Payment Suggestions"
+    "paymentSuggestionsTitle": "Payment Suggestions",
+    "payerInfoRequired": "Please select the payer.",
+    "beneficiariesRequired": "Please select the beneficiaries.",
+    "amountRequired": "Please enter the amount.",
+    "descriptionRequired": "Please enter a description."
   }
 }
