@@ -1,4 +1,8 @@
 {
+  "Global": {
+    "error": "错误",
+    "close": "关闭"
+  },
   "Home": {
     "spleetTitle": "Spleet!",
     "spleetSubtitle": "轻松解决与朋友的AA制！",
@@ -18,9 +22,9 @@
     "newBillTitle": "创建新群组",
     "newBillDescription": "创建一个群组，并添加分摊费用的参与者。",
     "billNameLabel": "群组名称",
-    "billNamePlaceholder": "在海底捞的晚餐",
+    "billNamePlaceholder": "北京之行 🇨🇳",
     "participantsLabel": "参与者",
-    "addParticipant": "添加参与者",
+    "addParticipant": "输入参与者姓名",
     "removeParticipant": "删除参与者",
     "nextButton": "下一步",
     "billTitle": "{billName}",
@@ -33,7 +37,7 @@
     "creationError": "群组创建失败"
   },
   "BillPage": {
-    "addTransactionTitle": "新增交易",
+    "addTransactionTitle": "新建交易",
     "addTransactionDescription": "与朋友分摊费用。",
     "payerLabel": "支付者",
     "selectPayerPlaceholder": "选择支付者",

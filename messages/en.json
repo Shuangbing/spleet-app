@@ -1,4 +1,8 @@
 {
+  "Global": {
+    "error": "Error",
+    "close": "Close"
+  },
   "Home": {
     "spleetTitle": "Spleet!",
     "spleetSubtitle": "Easily Split Bills with Friends!",
@@ -18,9 +22,9 @@
     "newBillTitle": "New bill",
     "newBillDescription": "Create a new bill and add participants to split the cost.",
     "billNameLabel": "Bill Name",
-    "billNamePlaceholder": "Dinner at Acme Restaurant",
+    "billNamePlaceholder": "japan trip 🇯🇵",
     "participantsLabel": "Participants",
-    "addParticipant": "Add participant",
+    "addParticipant": "Enter the name of the participant.",
     "removeParticipant": "Remove participant",
     "nextButton": "Next",
     "billTitle": "{billName}",
@@ -33,7 +37,7 @@
     "creationError": "Group creation failed"
   },
   "BillPage": {
-    "addTransactionTitle": "Add Transaction",
+    "addTransactionTitle": "New Transaction",
     "addTransactionDescription": "Split expenses with your friends.",
     "payerLabel": "Payer",
     "selectPayerPlaceholder": "Select payer",
@@ -42,7 +46,7 @@
     "enterAmountPlaceholder": "Enter amount",
     "descriptionLabel": "Description",
     "enterDescriptionPlaceholder": "Enter description",
-    "addTransactionButton": "Add Transaction",
+    "addTransactionButton": "Create Transaction",
     "backToTransactionsButton": "Back to transactions",
     "recentTransactionsTitle": "Recent Transactions",
     "paymentSuggestionsTitle": "Payment Suggestions",

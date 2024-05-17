@@ -1,4 +1,8 @@
 {
+  "Global": {
+    "error": "エラー",
+    "close": "閉じる"
+  },
   "Home": {
     "spleetTitle": "Spleet!",
     "spleetSubtitle": "友達との割り勘を楽々解決！",
@@ -18,9 +22,9 @@
     "newBillTitle": "新しいグループ",
     "newBillDescription": "グループを作成し、費用を分割する参加者を追加します。",
     "billNameLabel": "グループ名",
-    "billNamePlaceholder": "叙々苑でのディナー",
+    "billNamePlaceholder": "沖縄の旅 ⛱️",
     "participantsLabel": "参加者",
-    "addParticipant": "参加者を追加",
+    "addParticipant": "参加者の名前を入力してください",
     "removeParticipant": "参加者を削除",
     "nextButton": "次へ",
     "billTitle": "{billName}",
