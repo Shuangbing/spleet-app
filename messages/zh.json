@@ -32,7 +32,7 @@
     "removeParticipant": "删除参与者",
     "nextButton": "下一步",
     "billTitle": "{billName}",
-    "billDescription": "{participants} 人分担群组交易。",
+    "billDescription": "{participants} 人分担群组花费",
     "createNewBillButton": "创建新群组",
     "groupNameRequired": "群组名称是必需的",
     "participantNameRequired": "参与者名称是必需的",
@@ -41,8 +41,8 @@
     "creationError": "群组创建失败"
   },
   "BillPage": {
-    "addTransactionTitle": "新建交易",
-    "editTransactionTitle": "编辑交易",
+    "addTransactionTitle": "新建花费记录",
+    "editTransactionTitle": "编辑花费记录",
     "addTransactionDescription": "与朋友分摊费用",
     "payerLabel": "支付者",
     "selectPayerPlaceholder": "选择支付者",
@@ -55,7 +55,7 @@
     "editTransactionButton": "更新",
     "deleteTransactionButton": "删除",
     "backToTransactionsButton": "返回",
-    "recentTransactionsTitle": "最近的交易",
+    "recentTransactionsTitle": "最近的花费",
     "paymentSuggestionsTitle": "支付建议",
     "payerInfoRequired": "请选择支付者",
     "beneficiariesRequired": "请选择受益人",
