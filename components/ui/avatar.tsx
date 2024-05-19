@@ -29,7 +29,10 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
           )}
           style={{ backgroundColor: `${stringToHexColor(username)}` }}
           {...props}
-          onClick={handleClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleClick();
+          }}
           onBlur={handleBlur}
           tabIndex={0}
         >

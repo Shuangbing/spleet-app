@@ -98,6 +98,12 @@ export async function postData<T>(url: string, data: unknown): Promise<T> {
   return resData;
 };
 
+export async function deleteRequest<T>(url: string) {
+  return await fetch(url, {
+    method: "DELETE",
+  });
+};
+
 export function timestampToString(timestamp: number) {
   const userLocale = navigator.language;
   const formattedDate = new Intl.DateTimeFormat(userLocale, {
@@ -108,7 +114,13 @@ export function timestampToString(timestamp: number) {
   return formattedDate;
 }
 
-export function generatePaymentSuggestions(participants: Participant[], transactions: Transaction[]) {
+export type PaymentSuggestion = {
+  from: string;
+  to: string;
+  amount: number;
+}
+
+export function generatePaymentSuggestions(participants: Participant[], transactions: Transaction[]): PaymentSuggestion[] {
   const balances: { [key: string]: { name: string; paid: number; owed: number; balance: number; } } = {};
   participants.forEach(participant => {
     balances[participant.id] = {

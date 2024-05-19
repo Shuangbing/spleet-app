@@ -38,4 +38,8 @@ export class RedisClient {
   public async addTransaction(key: string, value: Transaction) {
     return await this.redis.call('JSON.ARRAPPEND', key, '$.transactions', JSON.stringify(value))
   }
+
+  public async editTransaction(key: string, value: Transaction[]) {
+    return await this.redis.call('JSON.SET', key, '$.transactions', JSON.stringify(value))
+  }
 }

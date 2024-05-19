@@ -1,104 +1,37 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { Bill } from "@/lib/redis";
-import { Avatar } from "@/components/ui/avatar";
+import { Bill, Transaction } from "@/lib/redis";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-import {
-  cn,
-  fetchData,
-  generatePaymentSuggestions,
-  postData,
-  timestampToString,
-} from "@/lib/utils";
+import { fetchData, generatePaymentSuggestions } from "@/lib/utils";
 import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
-import { RightArrow } from "../../../components/icons/RightArrow";
 import { useSWRConfig } from "swr";
-import { useOverlay } from "@/app/context/OverlayContext";
 import { updateRecentBills } from "@/lib/clientUtils";
+import PaymentSuggestionList from "@/components/ui/paymentSuggestionList";
+import TransactionItem from "@/components/ui/transactionItem";
+import TransactionEditor from "@/components/ui/transactionEditor";
+import BillHeader from "@/components/ui/billHeader";
 
 export default function BillPage({ params }: { params: { id: string } }) {
   const billId = params.id;
   const t = useTranslations("BillPage");
   const { data } = useSWR<Bill>(`/api/bill/${params.id}`, fetchData);
-  const [selectedBeneficiaries, setSelectedBeneficiaries] = useState<string[]>(
-    []
-  );
-  const [payer, setPayer] = useState("");
-  const [amount, setAmount] = useState(0);
-  const [description, setDescription] = useState("");
   const [isOpenTransactionEditor, setOpenTransactionEditor] = useState(false);
   const { mutate } = useSWRConfig();
-  const { showOverlay } = useOverlay();
+  const [editorType, setEditorType] = useState<"new" | "edit">("new");
+  const [currentTransaction, setCurrentTransaction] =
+    useState<Transaction | null>(null);
 
-  function handleCheckboxChange(id: string) {
-    setSelectedBeneficiaries((prevValues) => {
-      if (prevValues.includes(id)) {
-        return prevValues.filter((v) => v !== id);
-      } else {
-        return [...prevValues, id];
-      }
-    });
-  }
+  const handleAddTransactionButtonClick = () => {
+    setOpenTransactionEditor(false);
+    mutate(`/api/bill/${billId}`);
+  };
 
-  async function handleAddTransaction() {
-    if (!payer) {
-      showOverlay(t("payerInfoRequired"));
-      return;
-    }
-
-    if (selectedBeneficiaries.length === 0) {
-      showOverlay(t("beneficiariesRequired"));
-      return;
-    }
-
-    if (amount === 0) {
-      showOverlay(t("amountRequired"));
-      return;
-    }
-
-    if (description.length === 0) {
-      showOverlay(t("descriptionRequired"));
-      return;
-    }
-
-    const data = {
-      payer,
-      beneficiaries: selectedBeneficiaries,
-      amount,
-      description,
-    };
-    try {
-      await postData(`/api/bill/${billId}`, data);
-      setPayer("");
-      setSelectedBeneficiaries([]);
-      setAmount(0);
-      setDescription("");
-      setOpenTransactionEditor(false);
-      mutate(`/api/bill/${billId}`);
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  const handleTransactionItemClick = (transaction: Transaction) => {
+    setCurrentTransaction(transaction);
+    setEditorType("edit");
+    setOpenTransactionEditor(true);
+  };
 
   useEffect(() => {
     if (data && data.transactions.length === 0) {
@@ -126,28 +59,13 @@ export default function BillPage({ params }: { params: { id: string } }) {
     return null;
   }
 
-  function getNameByUserId(id: string) {
-    return data?.participants.find((value) => value.id === id)?.name || "?";
-  }
-
   return (
     <main className="flex-1 overflow-auto p-4 sm:p-6">
       <div className="mx-auto max-w-md">
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="mb-2">{data.bill_name}</CardTitle>
-            <CardDescription className="flex flex-wrap gap-1">
-              {data.participants.map((participant) => (
-                <Avatar
-                  className="h-8 w-8 text-white"
-                  key={`header_avatar_${participant.id}`}
-                  username={participant.name}
-                />
-              ))}
-            </CardDescription>
-          </CardHeader>
-        </Card>
-
+        <BillHeader
+          billName={data.bill_name}
+          participants={data.participants}
+        />
         {!isOpenTransactionEditor ? (
           <>
             <Button
@@ -169,42 +87,12 @@ export default function BillPage({ params }: { params: { id: string } }) {
                   .slice()
                   .reverse()
                   .map((transaction) => (
-                    <Card key={`transaction_${transaction.id}`}>
-                      <CardContent className="grid gap-2 p-4">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Avatar
-                              className="h-8 w-8"
-                              username={getNameByUserId(transaction.payer_id)}
-                            ></Avatar>
-                            <div>
-                              <div className="font-medium">
-                                {transaction.description}
-                              </div>
-
-                              <div className="flex flex-wrap gap-y-0.5 space-x-0.5">
-                                <RightArrow className="h-5 w-5"></RightArrow>
-                                {transaction.beneficiary_ids.map((id) => (
-                                  <Avatar
-                                    key={`recent_transactions_avatar_${id}`}
-                                    className="h-5 w-5 text-xs"
-                                    username={getNameByUserId(id)}
-                                  ></Avatar>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="flex items-end flex-col">
-                            <div className="text-sm text-gray-500 dark:text-gray-400">
-                              {timestampToString(transaction.timestamp)}
-                            </div>
-                            <div className="font-medium text-green-500">
-                              ￥{transaction.amount}
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
+                    <TransactionItem
+                      onClick={() => handleTransactionItemClick(transaction)}
+                      key={`transaction_${transaction.id}`}
+                      transaction={transaction}
+                      participants={data.participants}
+                    />
                   ))}
               </div>
 
@@ -215,43 +103,7 @@ export default function BillPage({ params }: { params: { id: string } }) {
                       {t("paymentSuggestionsTitle")}
                     </h2>
                   </div>
-                  <Card className="mb-6">
-                    <CardHeader className="p-4">
-                      <CardDescription className="grid gap-2">
-                        {paymentSuggestions.map((suggestion, index) => (
-                          <div
-                            key={`sugestion_${index}`}
-                            className="flex items-center justify-between"
-                          >
-                            <div className="flex items-center">
-                              <div className="flex gap-1 items-center font-bold">
-                                <Avatar
-                                  className="h-8 w-8 text-white"
-                                  key={`header_avatar_${suggestion.from}`}
-                                  username={suggestion.from}
-                                />
-                                {suggestion.from}
-                              </div>
-                              <RightArrow />
-                              <div className="flex gap-1 items-center font-bold">
-                                <Avatar
-                                  className="h-8 w-8 text-white"
-                                  key={`header_avatar_${suggestion.to}`}
-                                  username={suggestion.to}
-                                />
-                                {suggestion.to}
-                              </div>
-                            </div>
-                            <div className="flex items-end flex-col">
-                              <div className="font-medium text-green-500">
-                                ￥{Math.ceil(suggestion.amount)}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </CardDescription>
-                    </CardHeader>
-                  </Card>
+                  <PaymentSuggestionList suggestions={paymentSuggestions} />
                 </>
               ) : null}
             </div>
@@ -259,114 +111,14 @@ export default function BillPage({ params }: { params: { id: string } }) {
         ) : null}
 
         {isOpenTransactionEditor ? (
-          <Card>
-            <CardHeader className="pb-0">
-              <CardTitle>{t("addTransactionTitle")}</CardTitle>
-              <CardDescription>
-                {t("addTransactionDescription")}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="grid gap-4">
-              <div className="grid gap-2">
-                <Label>{t("payerLabel")}</Label>
-                <Select
-                  value={payer}
-                  onValueChange={(value: string) => setPayer(value)}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("selectPayerPlaceholder")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {data.participants.map((participant) => (
-                      <SelectItem
-                        key={`option_${participant.id}`}
-                        value={participant.id}
-                      >
-                        <div className="flex gap-2 items-center">
-                          <Avatar
-                            className="h-6 w-6 text-white"
-                            key={participant.id}
-                            username={participant.name}
-                          />
-                          {participant.name}
-                        </div>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-              <div className="grid gap-2">
-                <Label>{t("beneficiariesLabel")}</Label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {data.participants.map((participant, index) => (
-                    <Card
-                      key={`card_${participant.id}`}
-                      className={cn({
-                        ["bg-gray-100 dark:bg-gray-700"]:
-                          selectedBeneficiaries.includes(participant.id),
-                      })}
-                    >
-                      <label htmlFor={`checkbox_${participant.id}`}>
-                        <CardContent className="flex justify-between items-center gap-2 h-12 p-4">
-                          <div className="flex items-center gap-2">
-                            <Avatar
-                              className="h-8 w-8 text-white"
-                              key={participant.id}
-                              username={participant.name}
-                            />
-                            <div className="select-none">
-                              {participant.name}
-                            </div>
-                          </div>
-
-                          <Checkbox
-                            className="rounded-md border border-gray-300 bg-white text-primary-600 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-primary-400 dark:focus:ring-primary-500"
-                            id={`checkbox_${participant.id}`}
-                            value={participant.id}
-                            onCheckedChange={() =>
-                              handleCheckboxChange(participant.id)
-                            }
-                            checked={selectedBeneficiaries.includes(
-                              participant.id
-                            )}
-                          />
-                        </CardContent>
-                      </label>
-                    </Card>
-                  ))}
-                </div>
-              </div>
-              <div className="grid gap-2">
-                <Label>{t("amountLabel")}</Label>
-                <Input
-                  placeholder={t("enterAmountPlaceholder")}
-                  type="number"
-                  value={amount ? String(amount) : ""}
-                  onChange={(event) => setAmount(Number(event.target.value))}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label>{t("descriptionLabel")}</Label>
-                <Input
-                  placeholder={t("enterDescriptionPlaceholder")}
-                  value={description}
-                  onChange={(event) => setDescription(event.target.value)}
-                />
-              </div>
-            </CardContent>
-            <CardFooter className="flex flex-col space-y-2">
-              <Button className="w-full" onClick={() => handleAddTransaction()}>
-                {t("addTransactionButton")}
-              </Button>
-              <Button
-                className="w-full"
-                variant="outline"
-                onClick={() => setOpenTransactionEditor(false)}
-              >
-                {t("backToTransactionsButton")}
-              </Button>
-            </CardFooter>
-          </Card>
+          <TransactionEditor
+            editorType={editorType}
+            billId={billId}
+            participants={data.participants}
+            transaction={currentTransaction}
+            handleAddTransactionButtonClick={handleAddTransactionButtonClick}
+            handleBackButtonClick={() => setOpenTransactionEditor(false)}
+          />
         ) : null}
       </div>
     </main>
