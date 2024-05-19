@@ -22,7 +22,7 @@ const PaymentSuggestionList: React.FC<PaymentSuggestionListProps> = ({
               className="flex items-center justify-between"
             >
               <div className="flex items-center">
-                <div className="flex gap-1 items-center font-bold">
+                <div className="flex gap-1 items-center font-bold dark:text-white">
                   <Avatar
                     className="h-8 w-8 text-white"
                     key={`header_avatar_${suggestion.from}`}
@@ -31,7 +31,7 @@ const PaymentSuggestionList: React.FC<PaymentSuggestionListProps> = ({
                   {suggestion.from}
                 </div>
                 <RightArrow />
-                <div className="flex gap-1 items-center font-bold">
+                <div className="flex gap-1 items-center font-bold dark:text-white">
                   <Avatar
                     className="h-8 w-8 text-white"
                     key={`header_avatar_${suggestion.to}`}

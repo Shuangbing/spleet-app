@@ -1,7 +1,9 @@
 {
   "Global": {
     "error": "Error",
-    "close": "Close"
+    "close": "Close",
+    "confirm": "Confirm",
+    "ok": "Ok"
   },
   "Home": {
     "spleetTitle": "Spleet!",

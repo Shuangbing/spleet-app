@@ -1,7 +1,9 @@
 {
   "Global": {
     "error": "エラー",
-    "close": "閉じる"
+    "close": "閉じる",
+    "confirm": "確認",
+    "ok": "はい"
   },
   "Home": {
     "spleetTitle": "Spleet!",

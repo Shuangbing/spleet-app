@@ -71,7 +71,11 @@ export default function BillPage({ params }: { params: { id: string } }) {
             <Button
               className="w-full"
               variant="outline"
-              onClick={() => setOpenTransactionEditor(true)}
+              onClick={() => {
+                setEditorType("new");
+                setCurrentTransaction(null);
+                setOpenTransactionEditor(true);
+              }}
             >
               {t("addTransactionTitle")}
             </Button>

@@ -214,23 +214,26 @@ const TransactionEditor: React.FC<transactionEditorProps> = ({
         </div>
       </CardContent>
       <CardFooter className="flex flex-col space-y-2">
-        <Button className="w-full" onClick={() => addTransaction()}>
+        <Button className="w-full h-12" onClick={() => addTransaction()}>
           {editorType === "new" ? t("addTransactionButton") : "更新"}
         </Button>
         <Button
-          className="w-full"
+          className="w-full h-12"
           variant="outline"
           onClick={handleBackButtonClick}
         >
           {t("backToTransactionsButton")}
         </Button>
         {editorType === "edit" ? (
-          <Button
-            className="w-full bg-red-600 hover:bg-red-700"
-            onClick={() => removeTransaction()}
-          >
-            削除する
-          </Button>
+          <>
+            <div className="border-t border-gray-200 dark:border-gray-800 w-full my-11" />
+            <Button
+              className="w-full bg-red-600 hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-900 dark:text-white"
+              onClick={() => removeTransaction()}
+            >
+              削除する
+            </Button>
+          </>
         ) : null}
       </CardFooter>
     </Card>
