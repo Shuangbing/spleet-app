@@ -42,7 +42,8 @@
   },
   "BillPage": {
     "addTransactionTitle": "新建交易",
-    "addTransactionDescription": "与朋友分摊费用。",
+    "editTransactionTitle": "编辑交易",
+    "addTransactionDescription": "与朋友分摊费用",
     "payerLabel": "支付者",
     "selectPayerPlaceholder": "选择支付者",
     "beneficiariesLabel": "受益者",
@@ -51,6 +52,8 @@
     "descriptionLabel": "描述",
     "enterDescriptionPlaceholder": "输入描述",
     "addTransactionButton": "添加",
+    "editTransactionButton": "更新",
+    "deleteTransactionButton": "删除",
     "backToTransactionsButton": "返回",
     "recentTransactionsTitle": "最近的交易",
     "paymentSuggestionsTitle": "支付建议",

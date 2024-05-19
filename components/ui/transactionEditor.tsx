@@ -125,7 +125,9 @@ const TransactionEditor: React.FC<transactionEditorProps> = ({
     <Card>
       <CardHeader className="pb-0">
         <CardTitle>
-          {editorType === "new" ? t("addTransactionTitle") : "取引編集"}
+          {editorType === "new"
+            ? t("addTransactionTitle")
+            : t("editTransactionTitle")}
         </CardTitle>
         <CardDescription>{t("addTransactionDescription")}</CardDescription>
       </CardHeader>
@@ -215,7 +217,9 @@ const TransactionEditor: React.FC<transactionEditorProps> = ({
       </CardContent>
       <CardFooter className="flex flex-col space-y-2">
         <Button className="w-full h-12" onClick={() => addTransaction()}>
-          {editorType === "new" ? t("addTransactionButton") : "更新"}
+          {editorType === "new"
+            ? t("addTransactionButton")
+            : t("editTransactionButton")}
         </Button>
         <Button
           className="w-full h-12"
@@ -231,7 +235,7 @@ const TransactionEditor: React.FC<transactionEditorProps> = ({
               className="w-full bg-red-600 hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-900 dark:text-white"
               onClick={() => removeTransaction()}
             >
-              削除する
+              {t("deleteTransactionButton")}
             </Button>
           </>
         ) : null}

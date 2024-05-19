@@ -42,6 +42,7 @@
   },
   "BillPage": {
     "addTransactionTitle": "New Transaction",
+    "editTransactionTitle": "Edit Transaction",
     "addTransactionDescription": "Split expenses with your friends.",
     "payerLabel": "Payer",
     "selectPayerPlaceholder": "Select payer",
@@ -51,6 +52,8 @@
     "descriptionLabel": "Description",
     "enterDescriptionPlaceholder": "Enter description",
     "addTransactionButton": "Create Transaction",
+    "editTransactionButton": "Edit Transaction",
+    "deleteTransactionButton": "Delete",
     "backToTransactionsButton": "Back to transactions",
     "recentTransactionsTitle": "Recent Transactions",
     "paymentSuggestionsTitle": "Payment Suggestions",

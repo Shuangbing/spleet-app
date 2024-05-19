@@ -42,7 +42,8 @@
   },
   "BillPage": {
     "addTransactionTitle": "新しい取引",
-    "addTransactionDescription": "友達と費用を分割します。",
+    "editTransactionTitle": "取引編集",
+    "addTransactionDescription": "友達と費用を分割します",
     "payerLabel": "支払者",
     "selectPayerPlaceholder": "支払者を選択",
     "beneficiariesLabel": "受益者",
@@ -51,6 +52,8 @@
     "descriptionLabel": "説明",
     "enterDescriptionPlaceholder": "説明を入力",
     "addTransactionButton": "追加",
+    "editTransactionButton": "更新",
+    "deleteTransactionButton": "削除する",
     "backToTransactionsButton": "戻る",
     "recentTransactionsTitle": "最近の取引",
     "paymentSuggestionsTitle": "支払い提案",
