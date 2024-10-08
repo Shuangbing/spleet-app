@@ -21,7 +21,11 @@ export interface Bill {
 }
 
 export class RedisClient {
-  constructor(private redis = new Redis(process.env.KV_URL || '')) { }
+  constructor(private redis = new Redis(process.env.KV_URL || '', {
+    tls: {
+      rejectUnauthorized: false
+    }
+  })) { }
 
   public async setBill<T>(key: string, value: T): Promise<void> {
     await this.redis.call('JSON.SET', key, '$', JSON.stringify(value))
