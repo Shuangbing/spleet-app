@@ -60,8 +60,8 @@ export default function BillPage({ params }: { params: { id: string } }) {
   }
 
   return (
-    <main className="flex-1 overflow-auto p-4 sm:p-6">
-      <div className="mx-auto max-w-md">
+    <main className="flex-1 overflow-auto p-4 sm:p-6 bg-gradient-to-br from-background via-background to-muted/20">
+      <div className="mx-auto max-w-md animate-fade-in">
         <BillHeader
           billName={data.bill_name}
           participants={data.participants}
@@ -69,8 +69,9 @@ export default function BillPage({ params }: { params: { id: string } }) {
         {!isOpenTransactionEditor ? (
           <>
             <Button
-              className="w-full"
-              variant="outline"
+              className="w-full mb-6"
+              variant="gradient"
+              size="lg"
               onClick={() => {
                 setEditorType("new");
                 setCurrentTransaction(null);
@@ -80,35 +81,40 @@ export default function BillPage({ params }: { params: { id: string } }) {
               {t("addTransactionTitle")}
             </Button>
 
-            <div className="grid gap-4 mt-4">
+            <div className="grid gap-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-xl font-semibold">
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
                   {t("recentTransactionsTitle")}
                 </h2>
               </div>
-              <div className="grid gap-2">
+              <div className="grid gap-3">
                 {data.transactions
                   .slice()
                   .reverse()
-                  .map((transaction) => (
-                    <TransactionItem
-                      onClick={() => handleTransactionItemClick(transaction)}
+                  .map((transaction, index) => (
+                    <div 
                       key={`transaction_${transaction.id}`}
-                      transaction={transaction}
-                      participants={data.participants}
-                    />
+                      className="animate-slide-in-from-right"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <TransactionItem
+                        onClick={() => handleTransactionItemClick(transaction)}
+                        transaction={transaction}
+                        participants={data.participants}
+                      />
+                    </div>
                   ))}
               </div>
 
               {paymentSuggestions.length > 0 ? (
-                <>
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-xl font-semibold">
+                <div className="animate-slide-in-from-bottom">
+                  <div className="flex items-center justify-between mb-4">
+                    <h2 className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
                       {t("paymentSuggestionsTitle")}
                     </h2>
                   </div>
                   <PaymentSuggestionList suggestions={paymentSuggestions} />
-                </>
+                </div>
               ) : null}
             </div>
           </>

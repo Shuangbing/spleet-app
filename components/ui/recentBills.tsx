@@ -15,19 +15,38 @@ const RecentBills: React.FC = () => {
   }, []);
 
   return recentBills.length > 0 ? (
-    <div className="grid gap-4 mt-4">
+    <div className="grid gap-6 mt-8 animate-slide-in-from-bottom">
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">{t("recentBills")}</h2>
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+          {t("recentBills")}
+        </h2>
       </div>
-      <div className="grid">
-        {recentBills.map((bill) => {
+      <div className="grid gap-3">
+        {recentBills.map((bill, index) => {
           return (
-            <Card key={`RecentBill-${bill.id}`} className="mb-2">
-              <CardContent className="p-4">
+            <Card 
+              key={`RecentBill-${bill.id}`} 
+              className="group hover:shadow-lg transition-all duration-300 animate-slide-in-from-left"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              <CardContent className="p-5">
                 <div className="flex justify-between items-center">
-                  <p className="font-bold text-xl">{bill.name}</p>
+                  <div className="flex-1">
+                    <p className="font-bold text-lg text-card-foreground group-hover:text-primary transition-colors duration-300">
+                      {bill.name}
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      Recent activity
+                    </p>
+                  </div>
                   <Link href={`/bill/${bill.id}`}>
-                    <Button>{t("open")}</Button>
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      className="hover:bg-primary hover:text-primary-foreground hover:border-primary"
+                    >
+                      {t("open")}
+                    </Button>
                   </Link>
                 </div>
               </CardContent>

@@ -24,7 +24,7 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
       <div className="relative inline-block">
         <div
           className={cn(
-            "flex h-full w-full items-center justify-center rounded-full font-bold bg-gray-100 text-white select-none",
+            "flex h-full w-full items-center justify-center rounded-full font-bold text-white select-none cursor-pointer transition-all duration-300 hover:scale-110 hover:shadow-lg active:scale-95 ring-2 ring-white/20 hover:ring-white/40",
             className
           )}
           style={{ backgroundColor: `${stringToHexColor(username)}` }}
@@ -40,10 +40,10 @@ const Avatar = React.forwardRef<HTMLDivElement, AvatarProps>(
         </div>
         {showTooltip && (
           <div
-            className="absolute left-1/2 transform -translate-x-1/2 mt-3 bg-gray-700 text-white text-m px-4 py-2 rounded z-10 font-bold whitespace-nowrap max-w-[10rem] dark:bg-gray-500"
+            className="absolute left-1/2 transform -translate-x-1/2 mt-3 bg-popover text-popover-foreground text-sm px-3 py-2 rounded-lg z-50 font-medium whitespace-nowrap max-w-[10rem] shadow-lg border border-border animate-fade-in"
             style={{ top: "100%" }}
           >
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-45 w-2 h-2 bg-gray-700 dark:bg-gray-500" />
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rotate-45 w-2 h-2 bg-popover border-l border-t border-border" />
             {username}
           </div>
         )}

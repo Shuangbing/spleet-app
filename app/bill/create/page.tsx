@@ -78,13 +78,22 @@ export default function CreateBill() {
   }
 
   return (
-    <main className="flex-1 overflow-auto p-4 sm:p-6">
+    <main className="flex-1 overflow-auto p-4 sm:p-6 bg-gradient-to-br from-background via-background to-muted/20">
       <div className="mx-auto max-w-md">
         {step === STEP.INPUT_NEW_BILL ? (
           <>
-            <Card className="mb-6">
+            <div className="text-center mb-8 animate-fade-in">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-2">
+                {t("newBillTitle")}
+              </h1>
+              <p className="text-muted-foreground">
+                {t("newBillDescription")}
+              </p>
+            </div>
+            
+            <Card className="mb-6 animate-scale-in">
               <CardHeader className="pb-0">
-                <CardTitle>{t("newBillTitle")}</CardTitle>
+                <CardTitle className="text-xl">{t("newBillTitle")}</CardTitle>
                 <CardDescription>{t("newBillDescription")}</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -114,6 +123,7 @@ export default function CreateBill() {
                         size="icon"
                         variant="outline"
                         onClick={() => addParticipant(newParticipantName)}
+                        className="hover:bg-primary hover:text-primary-foreground hover:border-primary"
                       >
                         <PlusIcon className="h-4 w-4" />
                         <span className="sr-only">{t("addParticipant")}</span>
@@ -123,20 +133,22 @@ export default function CreateBill() {
                     {participants.map((participant, index) => {
                       return (
                         <div
-                          className="flex items-center justify-between"
+                          className="flex items-center justify-between p-3 rounded-lg bg-muted/50 border border-border/50 hover:bg-muted/70 transition-all duration-200 animate-slide-in-from-left"
                           key={`participant_${index}`}
+                          style={{ animationDelay: `${index * 100}ms` }}
                         >
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-3">
                             <Avatar
-                              className="h-8 w-8 text-white"
+                              className="h-10 w-10 text-white"
                               username={participant}
                             />
-                            <span className="font-medium">{participant}</span>
+                            <span className="font-medium text-foreground">{participant}</span>
                           </div>
                           <Button
                             size="icon"
-                            variant="outline"
+                            variant="ghost"
                             onClick={() => removeParticipant(index)}
+                            className="hover:bg-destructive hover:text-destructive-foreground h-8 w-8"
                           >
                             <XIcon className="h-4 w-4" />
                             <span className="sr-only">
@@ -150,7 +162,12 @@ export default function CreateBill() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button className="w-full" onClick={() => confirmNewBillForm()}>
+                <Button 
+                  variant="gradient" 
+                  size="lg" 
+                  className="w-full" 
+                  onClick={() => confirmNewBillForm()}
+                >
                   {t("nextButton")}
                 </Button>
               </CardFooter>
@@ -159,40 +176,52 @@ export default function CreateBill() {
           </>
         ) : null}
         {step === STEP.COMFIRM_NEW_BILL ? (
-          <Card>
-            <CardHeader className="pb-0">
-              <CardTitle>{t("billTitle", { billName })}</CardTitle>
-              <CardDescription>
+          <div className="animate-scale-in">
+            <div className="text-center mb-8">
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-2">
+                {t("billTitle", { billName })}
+              </h1>
+              <p className="text-muted-foreground">
                 {t("billDescription", { participants: participants.length })}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid gap-4">
-                {participants.map((participant, index) => (
-                  <div
-                    className="flex items-center justify-between"
-                    key={`participant_list_${index}`}
-                  >
-                    <div className="flex items-center gap-2">
+              </p>
+            </div>
+            
+            <Card className="mb-6">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-center text-xl">{billName}</CardTitle>
+                <CardDescription className="text-center">
+                  {participants.length} {participants.length === 1 ? 'participant' : 'participants'}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid gap-3">
+                  {participants.map((participant, index) => (
+                    <div
+                      className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 border border-border/50 animate-slide-in-from-right"
+                      key={`participant_list_${index}`}
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
                       <Avatar
-                        className="h-8 w-8 text-white"
+                        className="h-10 w-10 text-white"
                         username={participant}
                       />
-                      <span className="font-medium">{participant}</span>
+                      <span className="font-medium text-foreground">{participant}</span>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button
-                className="w-full"
-                onClick={() => sendCreateBillRequest()}
-              >
-                {t("createNewBillButton")}
-              </Button>
-            </CardFooter>
-          </Card>
+                  ))}
+                </div>
+              </CardContent>
+              <CardFooter>
+                <Button
+                  variant="gradient"
+                  size="lg"
+                  className="w-full"
+                  onClick={() => sendCreateBillRequest()}
+                >
+                  {t("createNewBillButton")}
+                </Button>
+              </CardFooter>
+            </Card>
+          </div>
         ) : null}
       </div>
     </main>
