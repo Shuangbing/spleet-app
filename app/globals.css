@@ -57,6 +57,18 @@
     @apply bg-background text-foreground font-sans antialiased;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
+  
+  /* Mobile viewport optimization */
+  @supports (height: 100dvh) {
+    html {
+      height: 100dvh;
+    }
+  }
+  
+  /* Prevent horizontal scroll on mobile */
+  html, body {
+    overflow-x: hidden;
+  }
 }
 
 @layer components {
@@ -113,5 +125,22 @@
   
   .animation-delay-1000 {
     animation-delay: 1000ms;
+  }
+  
+  /* Mobile-specific utilities */
+  .mobile-safe-height {
+    min-height: calc(100vh - 4rem);
+    min-height: calc(100dvh - 4rem);
+  }
+  
+  .mobile-container {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  /* Ensure elements don't get cut off on mobile */
+  @media (max-width: 768px) {
+    .mobile-spacing {
+      padding-bottom: 2rem;
+    }
   }
 }

@@ -15,8 +15,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1.0,
-  maximumScale: 1.0,
-  userScalable: false,
+  viewportFit: "cover",
 };
 
 export default async function RootLayout({
@@ -51,7 +50,7 @@ export default async function RootLayout({
             </div>
           </header>
           <NextIntlClientProvider locale={locale} messages={messages}>
-            <div className="min-h-[calc(100vh-4rem)] bg-gradient-to-br from-background via-background to-muted/20">
+            <div className="min-h-[calc(100dvh-4rem)] sm:min-h-[calc(100vh-4rem)] bg-gradient-to-br from-background via-background to-muted/20">
               {children}
             </div>
           </NextIntlClientProvider>

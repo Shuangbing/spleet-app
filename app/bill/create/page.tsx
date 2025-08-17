@@ -78,7 +78,7 @@ export default function CreateBill() {
   }
 
   return (
-    <main className="flex-1 overflow-auto p-4 sm:p-6 bg-gradient-to-br from-background via-background to-muted/20">
+    <main className="flex-1 min-h-[calc(100dvh-4rem)] sm:min-h-[calc(100vh-4rem)] overflow-auto p-4 sm:p-6 bg-gradient-to-br from-background via-background to-muted/20">
       <div className="mx-auto max-w-md">
         {step === STEP.INPUT_NEW_BILL ? (
           <>

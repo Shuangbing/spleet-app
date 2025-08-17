@@ -8,9 +8,9 @@ export default function Home() {
   const t = useTranslations("Home");
 
   return (
-    <div className="flex flex-col min-h-[calc(100vh-4rem)] relative overflow-hidden">
+    <div className="flex flex-col min-h-[calc(100dvh-4rem)] sm:min-h-[calc(100vh-4rem)] relative overflow-hidden">
       {/* Hero Section with Gradient Background */}
-      <section className="relative py-20 md:py-32 lg:py-40">
+      <section className="relative py-12 sm:py-20 md:py-32 lg:py-40">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary/20 rounded-full blur-3xl animate-pulse"></div>
@@ -41,7 +41,7 @@ export default function Home() {
         </div>
       </section>
       {/* Features Section */}
-      <section className="py-20 md:py-32 relative">
+      <section className="py-12 sm:py-20 md:py-32 relative">
         <div className="container mx-auto px-4 md:px-6 lg:px-8">
           <div className="mx-auto max-w-6xl">
             <div className="text-center mb-16">
@@ -109,7 +109,7 @@ export default function Home() {
         </div>
       </section>
       {/* Footer */}
-      <footer className="relative py-12 border-t border-border/40">
+      <footer className="relative py-8 sm:py-12 border-t border-border/40 mt-auto">
         <div className="absolute inset-0 bg-gradient-to-t from-muted/30 to-transparent"></div>
         <div className="container mx-auto px-4 md:px-6 lg:px-8 relative z-10">
           <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
